@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>juego de axel: las restas y sumas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background-color: #e71818;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #f07400;
+        }
+        .question {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: #000;
+        }
+        .error {
+            color: #928a8a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Juego de Adivinanzas</h1>
+        <div class="question" id="question"></div>
+        <div class="input-group">
+            <input type="number" id="answer" placeholder="escribe tu respuesta">
+        </div>
+        <button class="btn" onclick="checkAnswer()">Enviar</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "¿cuanto es 5 + 3?", a: 8 },
+            { q: "¿cuanto es 7 - 2?", a: 5 },
+            { q: "¿cuanto es 6 + 4?", a: 10 },
+            { q: "¿cuanto es 9 - 1?", a: 8 },
+            { q: "¿cuanto es 2 + 7?", a: 9 }
+        ];
+        let currentIndex = 0;
+
+        function displayQuestion() {
+            document.getElementById('question').textContent = questions[currentIndex].q;
+        }
+
+        function checkAnswer() {
+            const userAnswer = parseInt(document.getElementById('answer').value);
+            const resultElement = document.getElementById('result');
+            if (userAnswer === questions[currentIndex].a) {
+                resultElement.textContent = "¡correcto!";
+                resultElement.classList.remove('error');
+            } else {
+                resultElement.textContent = "¡incorrecto!";
+                resultElement.classList.add('error');
+            }
+            currentIndex++;
+            if (currentIndex < questions.length) {
+                setTimeout(() => {
+                    displayQuestion();
+                    resultElement.textContent = '';
+                    document.getElementById('answer').value = '';
+                }, 1500);
+            } else {
+                resultElement.textContent = "¡has completado el juego, hasta luego!";
+                document.getElementById('answer').disabled = true;
+                document.querySelector('.btn').disabled = true;
+            }
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
